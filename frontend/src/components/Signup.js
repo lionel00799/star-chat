@@ -1,18 +1,33 @@
 import "./Signup.css";
 import { useState } from "react";
 import { register } from "../services/authServices";
+import { useNotifications } from "@toolpad/core/useNotifications";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const notifications = useNotifications();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await register({ email, password });
       console.log(response);
+
+      notifications.show("Registration successful!", {
+        severity: "success",
+        autoHideDuration: 3000,
+      });
+      
     } catch (error) {
       console.log(error);
+
+      if (error.status === 401) {
+        notifications.show("User already exists!", {
+          severity: "info",
+          autoHideDuration: 3000,
+        });
+      }
     }
   };
 
