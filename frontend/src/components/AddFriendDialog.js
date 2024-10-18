@@ -52,9 +52,9 @@ export default function FormDialog({ open, onClose }) {
         },
       }}
     >
-      <DialogTitle>Add Friend</DialogTitle>
+      <DialogTitle sx={{ color: 'black', fontWeight: 'bold' }}>Add Friend</DialogTitle>
       <DialogContent>
-        <DialogContentText>
+        <DialogContentText sx={{ color: '#32383e' }}>
           Enter your friend's username
         </DialogContentText>
         <TextField

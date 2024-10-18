@@ -9,7 +9,7 @@ const StyledBadge = styled(Badge)(({ theme, status }) => ({
   '& .MuiBadge-badge': {
     backgroundColor: status === 'online' ? '#44b700' : '#f44336', // Green for online, red for offline
     color: status === 'online' ? '#44b700' : '#f44336',
-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    boxShadow: `0 0 0 2px black`,
     '&::after': {
       position: 'absolute',
       top: 0,
@@ -17,19 +17,8 @@ const StyledBadge = styled(Badge)(({ theme, status }) => ({
       width: '100%',
       height: '100%',
       borderRadius: '50%',
-      animation: status === 'online' ? 'ripple 1.2s infinite ease-in-out' : 'none', // Ripple effect only if online
       border: '1px solid currentColor',
       content: '""',
-    },
-  },
-  '@keyframes ripple': {
-    '0%': {
-      transform: 'scale(.8)',
-      opacity: 1,
-    },
-    '100%': {
-      transform: 'scale(2.4)',
-      opacity: 0,
     },
   },
 }));

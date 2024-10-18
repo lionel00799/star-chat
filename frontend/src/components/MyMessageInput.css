@@ -1,0 +1,22 @@
+.my-message-input {
+    position: fixed;
+    bottom: 20px;
+    left: 320px; 
+    right: 0; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px; /* Outer padding */
+}
+
+.my-message-input textarea {
+    width: 96%; /* Adjust width to 90% */
+    height: fit-content; /* Use fit-content instead of percentage for height */
+    resize: none; /* Disable resizing */
+    padding: 10px; /* Inner padding for the textarea */
+    border: 1px solid #cccccc; /* Border for textarea */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    margin: 0 auto; /* Center the textarea */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}

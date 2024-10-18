@@ -1,0 +1,282 @@
+.chat-pane {
+    flex: 1; /* Take remaining space */
+    background-color: #171a1c; /* White background */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.chat-pane-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #000;
+    width: 100%;
+    height: 12%;
+    box-sizing: border-box;
+}
+
+.avatar-container {
+    display: flex;
+    align-items: center;
+    margin-left: 40px;
+
+}
+
+.avatar-container-name {
+    color: white;
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 18px;
+}
+
+.chat-online-button {
+    width: 80px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    background-color: transparent;
+    border: 1px solid #232628;
+    border-radius: 4px;
+    color: white;
+    font-size: 16px;
+    margin-top: 4px;
+}
+
+.online-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #44b700;
+    margin-right: 5px;
+}
+
+.chat-button-container {
+    display: flex;
+    align-items: center;
+}
+.chat-call-button {
+    width: 80px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: 1px solid #232628;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    margin-top: 4px;
+}
+.chat-profile-button {
+    width: 100px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    background-color: transparent;
+    border: 1px solid #232628;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    margin-top: 4px;
+    text-align: center;
+}
+
+.messages {
+    width: 100%;
+    flex: 1; /* Take available space for messages */
+    overflow-y: auto; /* Scroll if needed */
+    padding: 10px;
+    border: none; /* Border for messages area */
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box;
+}
+
+.message {
+    margin: 5px 0; /* Spacing between messages */
+}
+
+.message-footer {
+    width: 96%;
+    margin-bottom: 20px;
+}
+
+.message-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Full width */
+    height: 140px;
+    border: 1px solid #232628; /* Border for textarea */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #0b0d0e;
+    box-sizing: border-box;
+}
+
+.message-input-container:focus-within {
+    border: 1px solid transparent; /* Border for textarea */
+    box-shadow: 0 0 0 2px #0b6bcb;
+}
+
+.message-input {
+    width: 100%;
+    border: none; /* Border for textarea */
+    border-radius: 4px; /* Rounded corners */
+    color: white;
+    background-color: unset;
+    font-size: 18px;
+    resize: none; /* Disable resizing */
+    box-sizing: border-box;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.message-input:focus {
+    outline: none;
+}
+
+.message-input-divider {
+    height: 1px;
+    width: 98%;
+    background-color: #232628;
+    bottom: 100px;
+}
+
+.message-send-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: 100%; 
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+}
+
+.message-send-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 12px;
+    margin-right: 25px;
+    background-color: #232628;
+    font-size: 16px;
+}
+
+.message-send-button:hover {
+    background-color: #0b6bcb;
+}
+
+@font-face {
+    font-family: "Material Symbols Outlined";
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: block;
+    src: url("../assets/font/material-symbols-outlined.woff2") format("woff2");
+  }
+  .material-symbols-outlined {
+    font-family: "Material Symbols Outlined";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga";
+    color: #D7D7D7;
+    margin-top: 12px;
+    margin-right: 25px;
+  }
+  
+  @font-face {
+    font-family: "Material Symbols Rounded";
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: block;
+    src: url("../assets/font/material-symbols-rounded.woff2") format("woff2");
+  }
+  .material-symbols-rounded {
+    font-family: "Material Symbols Rounded";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga";
+  }
+  
+  @font-face {
+    font-family: "Material Symbols Sharp";
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: block;
+    src: url("../assets/font/material-symbols-sharp.woff2") format("woff2");
+  }
+  .material-symbols-sharp {
+    font-family: "Material Symbols Sharp";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga";
+  }
+  
+  
+  @font-face {
+    font-family: "Material Icons Outlined";
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: block;
+    src: url("../assets/font/material-icons-outlined.woff2") format("woff2");
+  }
+  .material-icons-outlined {
+    font-family: "Material Icons Outlined";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga";
+    color: #D7D7D7;
+  }

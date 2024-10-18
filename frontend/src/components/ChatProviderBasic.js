@@ -10,6 +10,7 @@ import { Button } from '@mui/material';
 import { AddFriendButton } from './Button';
 import FormDialog from './AddFriendDialog';
 import BadgeAvatars from './FriendAvatar';
+import MyMessageInput from './MyMessageInput';
 
 const chatTheme = createTheme({
   cssVariables: {
@@ -120,8 +121,10 @@ function ChatProviderBasic(props) {
       >
         <AddFriendButton onClick={handleClickOpen} />
       </Button>
-      <DashboardLayout>
-        <ChatPageContent pathname={pathname} />
+      <DashboardLayout sx={{ display: 'flex', flexDirection: 'column'}}>
+        <ChatPageContent pathname={pathname}>
+        </ChatPageContent>
+        <MyMessageInput />
       </DashboardLayout>
       <FormDialog open={isDialogOpen} onClose={handleClose} />
     </AppProvider>

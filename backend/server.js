@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 
 const authRoutes = require('./routes/auth');
 const userinfoRoutes = require('./routes/userinfo');
+const addfriendRoutes = require('./routes/addfriend');
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ connectDB();
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/userinfo', userinfoRoutes);
+app.use('/api/addfriend', addfriendRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

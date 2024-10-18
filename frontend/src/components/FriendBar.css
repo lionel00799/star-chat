@@ -1,0 +1,55 @@
+.friend-bar {
+    width: 300px; /* Fixed width for sidebar */
+    background-color: #0b0d0e; /* Light background color */
+    color: #cdd7e1;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.friend-bar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.friend-bar-header .material-symbols-outlined {
+    margin-top: 5px;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: transform 0.1s ease, color 0.1s ease;
+}
+
+.friend-bar-header .material-symbols-outlined:active {
+    transform: scale(0.9);
+    color: #4caf50;
+}
+
+.friend-bar-list {
+    width: 100%;
+    overflow-y: auto; /* Enable scrolling if needed */
+}
+
+.friend-bar-item {
+    width: 260px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.0s ease;
+    padding: 0 20px;
+}
+
+.friend-bar-item:hover {
+    background-color: rgba(50, 56, 62, 0.3);
+}
+
+.friend-bar-item.active {
+    background-color: #32383e;
+}
+
+.friend-bar-item-name {
+    margin-left: 20px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+}
