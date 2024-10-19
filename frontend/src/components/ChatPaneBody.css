@@ -1,0 +1,138 @@
+.messages {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+  height: calc(100vh - 200px);
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.message-row {
+  display: flex;
+  align-items: flex-start; /* Ensures the message and avatar align at the top */
+  margin-bottom: 10px;
+}
+
+.message-left-row {
+  justify-content: flex-start;
+  animation: slideInFromLeft 0.2s ease-in-out;
+}
+
+.message-right-row {
+  justify-content: flex-end;
+  animation: slideInFromRight 0.2s ease-in-out;
+}
+
+.avatar-container {
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.message-container {
+  max-width: 70%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.message-left-container {
+  align-self: flex-start;
+}
+
+.message-right-container {
+  align-self: flex-end;
+}
+
+.message {
+  max-width: 100%;
+  padding: 10px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  border-radius: 15px;
+}
+
+.message-left {
+  background-color: #000;
+  color: white;
+  border-radius: 0 15px 15px 15px;
+  margin-left: 15px;
+}
+
+.message-right {
+  background-color: #0b6bcb;
+  color: white;
+  border-radius: 15px 0 15px 15px;
+  margin-right: 15px;
+}
+
+.message-metadata-left {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #92a6ad;
+  width: 100%;
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-bottom: 5px;
+}
+
+/* Metadata container for right messages */
+.message-metadata-right {
+  display: flex;
+  justify-content: space-between; /* Aligns the content to the right */
+  font-size: 0.85rem; /* Slightly smaller font for metadata */
+  color: #92a6ad; /* Gray color for metadata */
+  width: 100%; /* Ensure it takes full width */
+  margin-top: 5px; /* Spacing above the metadata */
+  margin-bottom: 5px;
+}
+
+.message-name-left {
+  margin-right: 15px; /* Adjust the left margin to align the name to the left */
+}
+
+.message-time-left {
+  margin-right: 15px; /* Adjust the left margin to align the time to the left */
+}
+
+.message-name-right {
+  margin-right: 15px; /* Adjust the left margin to align the name to the right */
+}
+
+.message-time-right {
+  margin-right: 15px; /* Adjust the left margin to align the time to the right */
+}
+
+.message-name {
+  font-weight: bold;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  margin-left: 10px; 
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

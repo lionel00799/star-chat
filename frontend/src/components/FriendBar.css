@@ -1,3 +1,13 @@
+.app-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.chat-pane-container {
+    width: 100%;
+}
+
 .friend-bar {
     width: 300px; /* Fixed width for sidebar */
     background-color: #0b0d0e; /* Light background color */
@@ -37,6 +47,7 @@
     cursor: pointer;
     transition: background-color 0.0s ease;
     padding: 0 20px;
+    border-bottom: 1px solid #232628;
 }
 
 .friend-bar-item:hover {

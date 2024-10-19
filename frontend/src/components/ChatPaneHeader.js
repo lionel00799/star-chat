@@ -4,13 +4,15 @@ const ChatPaneHeader = ({ friend, isOnline }) => {
   return (
     <div className="chat-pane-header">
       <div className="avatar-container">
-        <BadgeAvatars username={"friend"} isOnline={true} />
+        <BadgeAvatars username={friend} isOnline={true} />
         <span className="avatar-container-name">
-          {"friend"}
+          {friend}
         </span>
         <button className="chat-online-button">
-          <div className="online-dot" />
-          Online
+          <div 
+            className={`online-dot ${true ? 'online' : 'offline'}`} 
+          />
+          {isOnline ? 'Online' : 'Offline'}
         </button>
       </div>
       <div className="chat-button-container">
