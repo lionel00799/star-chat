@@ -6,21 +6,22 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { searchUsername } from '../services/userinfoService';
+import { searchFriendname } from '../services/userinfoService';
 import { useNotifications } from "@toolpad/core/useNotifications";
 
 export default function FormDialog({ open, onClose }) {
-  const [username, setUsername] = React.useState('');
+  const [friendname, setFriendname] = React.useState('');
 
   const notifications = useNotifications();
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission
     try {
-      const success = await searchUsername(username);
+      const userId = localStorage.getItem('userId');
+      const success = await searchFriendname(friendname, userId);
       if (success) {
-        onClose(username);
-        setUsername(''); // Reset the username field    
+        onClose(friendname);
+        setFriendname(''); // Reset the username field    
       }
     } catch (error) {
       console.error('Error searching for username:', error);
@@ -65,8 +66,8 @@ export default function FormDialog({ open, onClose }) {
           type="text"
           fullWidth
           variant="standard"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)} // Correct the handler
+          value={friendname}
+          onChange={(event) => setFriendname(event.target.value)} // Correct the handler
         />
       </DialogContent>
       <DialogActions>

@@ -5,19 +5,14 @@ import FriendBarItem from "./FriendBarItem"; // Import the FriendBarItem compone
 import FormDialog from "./AddFriendDialog";
 import ChatPane from "./ChatPane"; // Import ChatPane component
 
-const FRIENDS_LIST = ['Alice']; // Add more friend names as needed
+const FRIENDS_LIST = []; // Add more friend names as needed
 
 const FriendBar = () => {
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [friendsList, setFriendsList] = useState(FRIENDS_LIST);
 
-  const [messages, setMessages] = useState({
-    Alice: [
-      { text: "Hello!", sender: "user", name: "You", time: "10:03:42 AM" },
-      { text: "How are you?", sender: "other", name: "Alice", time: "10:03:42 AM" },
-    ],
-  });
+  const [messages, setMessages] = useState([]);
 
   const handleClickOpen = () => {
     setDialogOpen(true);
@@ -47,12 +42,12 @@ const FriendBar = () => {
     }
   };
 
-  const addMessage = (text, sender, name, time) => {
+  const addMessage = React.useCallback((text, sender, name, time) => {
     setMessages((prevMessages) => ({
       ...prevMessages,
       [selectedFriend]: [...prevMessages[selectedFriend], { text, sender, name, time }],
     }));
-  };
+  }, [selectedFriend]);
 
   return (
     <div className="app-container">

@@ -18,7 +18,7 @@ const ChatPaneBody = ({ messages = [] }) => {
         >
           {msg.sender !== "user" && (
             <div className="avatar-container">
-              <BadgeAvatars />
+              <BadgeAvatars username={msg.name} isOnline={true}/>
             </div>
           )}
           <div

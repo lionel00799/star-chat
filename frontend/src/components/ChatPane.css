@@ -19,13 +19,13 @@
     box-sizing: border-box;
 }
 
-.avatar-container {
+.header-avatar-container {
     display: flex;
     align-items: center;
     margin-left: 40px;
 }
 
-.avatar-container-name {
+.header-avatar-container-name {
     color: white;
     font-size: 24px;
     font-weight: 400;
@@ -96,6 +96,7 @@
 .message-footer {
     width: 96%;
     margin-bottom: 20px;
+    z-index: 1000;
 }
 
 .message-input-container {

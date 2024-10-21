@@ -20,14 +20,14 @@ const fetchUserData = async () => {
     }
 };
 
-const searchUsername = async (username) => {
+const searchFriendname = async (friendname, userId) => {
     try {
-        const response = await axios.get(`${SEARCH_API_URL}?username=${username}`);
+        const response = await axios.get(`${SEARCH_API_URL}?friendname=${friendname}&userId=${userId}`);
         return response.data.success;
     } catch (error) {
-        console.log('Failed to search username:', error);
+        console.log('Failed to search friendname:', error);
         throw error;
     }
 }
 
-export { fetchUserData, searchUsername };
+export { fetchUserData, searchFriendname };

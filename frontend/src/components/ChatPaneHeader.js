@@ -3,9 +3,9 @@ import BadgeAvatars from "./FriendAvatar";
 const ChatPaneHeader = ({ friend, isOnline }) => {
   return (
     <div className="chat-pane-header">
-      <div className="avatar-container">
+      <div className="header-avatar-container">
         <BadgeAvatars username={friend} isOnline={true} />
-        <span className="avatar-container-name">
+        <span className="header-avatar-container-name">
           {friend}
         </span>
         <button className="chat-online-button">

@@ -1,15 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const addFriend = require('../utils/handleFriendList');
+const startConversation = require('../utils/handleConversation');
 
 router.get('/', async (req, res) => {
     try {
-        const username = req.query.username;
-        console.log("username:", username);
-        const user = await User.findOne({username: username});
+        const friendname = req.query.friendname;
+        const userId = req.query.userId;
+        const username = await User.findById(userId, 'username');
+        const friendId = await User.findOne({username: friendname}, '_id');
+
+        console.log("friendname:", friendname, "username:", username);
+
+        const user = await User.findOne({username: friendname});
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
+
+        await addFriend(userId, friendId);
+        await startConversation(userId, friendId);
+
         res.json({
             success: 'Add friend successfully!'
         });
