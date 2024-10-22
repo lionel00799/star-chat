@@ -8,7 +8,7 @@ const ChatPane = ({ friend, messages, addMessage, setMessages, isOnline }) => {
   return (
     <div className="chat-pane">
       <ChatPaneHeader friend={friend} isOnline={isOnline}/>
-      <ChatPaneBody messages={messages} />
+      <ChatPaneBody messages={messages} isOnline={isOnline}/>
       <ChatPaneFooter friend={friend} addMessage={addMessage} setMessages={setMessages}/>
     </div>
   );

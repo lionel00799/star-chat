@@ -4,7 +4,7 @@ import "../assets/style.css";
 import FriendBarItem from "./FriendBarItem"; // Import the FriendBarItem component
 import FormDialog from "./AddFriendDialog";
 import ChatPane from "./ChatPane"; // Import ChatPane component
-import getFriendList from "../services/statusService"; // Fetches friends list
+import { getFriendList, getFriendStatus} from "../services/statusService"; // Fetches friends list
 import io from "socket.io-client";
 
 const socket = io.connect('http://192.168.140.238:3003');
@@ -40,10 +40,10 @@ const FriendBar = () => {
     socket.emit('register_user', localStorage.getItem('userId'));
 
     // Listen for updates to friends' status
-    socket.on('update_user_status', ({ userId, status }) => {
+    socket.on('update_user_status', ({ username, status }) => {
       setFriendsList(prevFriendsList => 
         prevFriendsList.map(friend => 
-          friend.name === userId ? { ...friend, status } : friend
+          friend.name === username ? { ...friend, status } : friend
         )
       );
     });
@@ -58,22 +58,27 @@ const FriendBar = () => {
     setDialogOpen(true);
   };
 
-  const handleClickClose = (username) => {
+  const handleClickClose = async(username) => {
     setDialogOpen(false);
 
     if (username && !friendsList.some(friend => friend.name === username)) {
-      // Add the new friend to the friends list
-      const newFriend = { name: username, status: false }; // Default status
-      setFriendsList(prevList => [...prevList, newFriend]);
+      try {
+        // Add the new friend to the friends list
+        const friendStatus = await getFriendStatus(username);
+        const newFriend = { name: username, status: friendStatus }; // Default status
+        setFriendsList(prevList => [...prevList, newFriend]);
 
-      // Initialize empty message history for the new friend
-      setMessages(prevMessages => ({
-        ...prevMessages,
-        [username]: [],
-      }));
+        // Initialize empty message history for the new friend
+        setMessages(prevMessages => ({
+          ...prevMessages,
+          [username]: [],
+        }));
 
-      // Set the new friend as the selected friend
-      setSelectedFriend(username);
+        // Set the new friend as the selected friend
+        setSelectedFriend(username);
+      } catch (error) {
+        console.error('Error adding friend:', error);
+      }
     }
   };
 

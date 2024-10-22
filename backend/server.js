@@ -9,6 +9,7 @@ const authRoutes = require("./routes/auth");
 const userinfoRoutes = require("./routes/userinfo");
 const addfriendRoutes = require("./routes/addfriend");
 const statusRoutes = require("./routes/status");
+const friendStatusRoutes = require("./routes/friendStatus");
 
 const { getConversationInfo, saveMessage, getConversationMessages } = require("./utils/handleMessage");
 const User = require("./models/User");
@@ -46,7 +47,9 @@ io.on("connection", socket => {
   socket.on("register_user", async userId => {
     users[userId] = socket.id;
     await User.findByIdAndUpdate(userId, { $set: { isOnline: true } });
-    io.emit('update_user_status', { userId, status: true });
+    let username = await User.findById(userId, "username");
+    username = username.username;
+    io.emit('update_user_status', { username, status: true });
     console.log("User registered:", users);
   });
 
@@ -107,7 +110,9 @@ io.on("connection", socket => {
       if (socketId === socket.id) {
         delete users[userId]; // Remove disconnected user from the mapping
         await User.findByIdAndUpdate(userId, { isOnline: false });
-        io.emit('update_user_status', { userId, status: false });
+        let username = await User.findById(userId, "username");
+        username = username.username;
+        io.emit('update_user_status', { username, status: false });
         break;
       }
     }
@@ -163,6 +168,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/userinfo", userinfoRoutes);
 app.use("/api/addfriend", addfriendRoutes);
 app.use("/api/status", statusRoutes);
+app.use("/api/friendStatus", friendStatusRoutes);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
