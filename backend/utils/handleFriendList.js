@@ -2,6 +2,8 @@ const User = require('../models/User');
 
 const addFriend = async (userId, friendId) => {
     try {
+
+        console.log("userId: ", userId, "friendId: ", friendId);
         const user = await User.findById(userId);
         const friend = await User.findById(friendId);
 

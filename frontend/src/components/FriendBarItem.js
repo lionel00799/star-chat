@@ -7,8 +7,8 @@ const FriendBarItem = ({ friend, isSelected, onClick }) => {
       className={`friend-bar-item ${isSelected ? 'active' : ''}`}
       onClick={onClick}
     >
-      <BadgeAvatars username={friend} isOnline={true}/>
-      <span className="friend-bar-item-name">{friend}</span>
+      <BadgeAvatars username={friend.name} isOnline={friend.status}/>
+      <span className="friend-bar-item-name">{friend.name}</span>
     </div>
   );
 };

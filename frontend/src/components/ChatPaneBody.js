@@ -2,7 +2,7 @@ import React from "react";
 import "./ChatPaneBody.css"; // Import CSS for styling
 import BadgeAvatars from "./FriendAvatar";
 
-const ChatPaneBody = ({ messages = [] }) => {
+const ChatPaneBody = ({ messages = [], isOnline }) => {
   const messageEndRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -18,7 +18,7 @@ const ChatPaneBody = ({ messages = [] }) => {
         >
           {msg.sender !== "user" && (
             <div className="avatar-container">
-              <BadgeAvatars username={msg.name} isOnline={true}/>
+              <BadgeAvatars username={msg.name} isOnline={isOnline}/>
             </div>
           )}
           <div

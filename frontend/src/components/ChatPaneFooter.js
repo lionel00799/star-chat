@@ -1,15 +1,14 @@
 import React from "react";
 import io from 'socket.io-client';
+import formatMessages from "../utils/handleOldMessages";
 
 const socket = io.connect('http://192.168.140.238:3003');
 
-const ChatPaneFooter = ({ friend, addMessage }) => {
+const ChatPaneFooter = ({ friend, addMessage, setMessages }) => {
   const userId = localStorage.getItem('userId');
   const [inputText, setInputText] = React.useState("");
 
   React.useEffect(() => {
-    socket.emit('register_user', userId);
-
     const messageData = {
       senderId: userId,
       receiver: friend,
@@ -19,6 +18,18 @@ const ChatPaneFooter = ({ friend, addMessage }) => {
   }, [userId, friend]);
 
   React.useEffect(() => {
+    socket.on("load_old_messages", (messages) => {
+      // Format the messages
+      const formattedMessages = formatMessages(messages);
+      console.log("Received old messages:", formattedMessages);
+      
+      setMessages((prevMessages) => ({
+        ...prevMessages,
+        [friend]: formattedMessages
+      }));
+    });
+
+
     socket.on("system_message", (message) => {
       console.log("Received system message:", message);
     });
@@ -31,7 +42,7 @@ const ChatPaneFooter = ({ friend, addMessage }) => {
     return () => {
     socket.off('receive_private_message');
     }
-  }, [addMessage]);
+  }, [addMessage, setMessages, friend]);
 
   const sendMessage = (message) => {
     const messageData = {

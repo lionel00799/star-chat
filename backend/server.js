@@ -8,8 +8,10 @@ const { Server } = require("socket.io");
 const authRoutes = require("./routes/auth");
 const userinfoRoutes = require("./routes/userinfo");
 const addfriendRoutes = require("./routes/addfriend");
+const statusRoutes = require("./routes/status");
 
-const { getConversationInfo, saveMessage } = require("./utils/handleMessage");
+const { getConversationInfo, saveMessage, getConversationMessages } = require("./utils/handleMessage");
+const User = require("./models/User");
 
 dotenv.config();
 
@@ -41,8 +43,10 @@ function createRoomId(userId, friendId) {
 io.on("connection", socket => {
   console.log(`User connected: ${socket.id}`);
 
-  socket.on("register_user", userId => {
+  socket.on("register_user", async userId => {
     users[userId] = socket.id;
+    await User.findByIdAndUpdate(userId, { $set: { isOnline: true } });
+    io.emit('update_user_status', { userId, status: true });
     console.log("User registered:", users);
   });
 
@@ -56,6 +60,12 @@ io.on("connection", socket => {
 
       socket.join(roomId); // Add the current user to the room
       console.log(`User ${data.senderId} joined room ${roomId}`);
+
+      const oldMessages = await getConversationMessages(conversationId);
+
+      console.log("oldMessages: ", oldMessages);
+
+      socket.emit("load_old_messages", oldMessages);
 
       // Send a message to both users indicating they have joined the room
       io
@@ -91,11 +101,13 @@ io.on("connection", socket => {
     }
   });
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async () => {
     console.log(`User disconnected: ${socket.id}`);
     for (const [userId, socketId] of Object.entries(users)) {
       if (socketId === socket.id) {
         delete users[userId]; // Remove disconnected user from the mapping
+        await User.findByIdAndUpdate(userId, { isOnline: false });
+        io.emit('update_user_status', { userId, status: false });
         break;
       }
     }
@@ -150,6 +162,7 @@ io.on("connection", socket => {
 app.use("/api/auth", authRoutes);
 app.use("/api/userinfo", userinfoRoutes);
 app.use("/api/addfriend", addfriendRoutes);
+app.use("/api/status", statusRoutes);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {

@@ -2,11 +2,13 @@ import "./Signup.css";
 import { useState } from "react";
 import { register } from "../services/authServices";
 import { useNotifications } from "@toolpad/core/useNotifications";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const notifications = useNotifications();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +20,8 @@ const SignUp = () => {
         severity: "success",
         autoHideDuration: 3000,
       });
+
+      navigate("/login");
       
     } catch (error) {
       console.log(error);

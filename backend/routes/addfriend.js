@@ -18,8 +18,8 @@ router.get('/', async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        await addFriend(userId, friendId);
-        await startConversation(userId, friendId);
+        await addFriend(userId, friendId._id.toString());
+        await startConversation(userId, friendId._id.toString());
 
         res.json({
             success: 'Add friend successfully!'

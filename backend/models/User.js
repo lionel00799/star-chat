@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
       ref: "User"
     }
   ],
+  isOnline: {
+    type: Boolean,
+    default: false
+  },
   createdAt: {
     type: Date,
     default: Date.now

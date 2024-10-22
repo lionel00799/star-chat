@@ -4,15 +4,55 @@ import "../assets/style.css";
 import FriendBarItem from "./FriendBarItem"; // Import the FriendBarItem component
 import FormDialog from "./AddFriendDialog";
 import ChatPane from "./ChatPane"; // Import ChatPane component
+import getFriendList from "../services/statusService"; // Fetches friends list
+import io from "socket.io-client";
 
-const FRIENDS_LIST = []; // Add more friend names as needed
+const socket = io.connect('http://192.168.140.238:3003');
+
+// Initial friends list with name and status
+const FRIENDS_LIST = [];
 
 const FriendBar = () => {
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const [friendsList, setFriendsList] = useState(FRIENDS_LIST);
-
+  const [friendsList, setFriendsList] = useState(FRIENDS_LIST); // State to store friends list
   const [messages, setMessages] = useState([]);
+
+  React.useEffect(() => {
+    // Fetch friends' status on initial login
+    const fetchFriendsStatus = async () => {
+      try {
+        const friendList = await getFriendList(localStorage.getItem('userId')); // Fetch list of friends from server
+
+        console.log('Friends list:', friendList);
+        
+        // Update friendsList with fetched friendList
+        setFriendsList(friendList);
+        
+      } catch (error) {
+        console.error('Error fetching friends status:', error);
+      }
+    };
+
+    fetchFriendsStatus(); // Fetch friends when component mounts
+
+    // Register user with socket for status updates
+    socket.emit('register_user', localStorage.getItem('userId'));
+
+    // Listen for updates to friends' status
+    socket.on('update_user_status', ({ userId, status }) => {
+      setFriendsList(prevFriendsList => 
+        prevFriendsList.map(friend => 
+          friend.name === userId ? { ...friend, status } : friend
+        )
+      );
+    });
+
+    // Cleanup event listener on unmount
+    return () => {
+      socket.off('update_user_status');
+    };
+  }, []);
 
   const handleClickOpen = () => {
     setDialogOpen(true);
@@ -21,12 +61,13 @@ const FriendBar = () => {
   const handleClickClose = (username) => {
     setDialogOpen(false);
 
-    if (username && !friendsList.includes(username)) {
+    if (username && !friendsList.some(friend => friend.name === username)) {
       // Add the new friend to the friends list
-      setFriendsList((prevList) => [...prevList, username]);
+      const newFriend = { name: username, status: false }; // Default status
+      setFriendsList(prevList => [...prevList, newFriend]);
 
       // Initialize empty message history for the new friend
-      setMessages((prevMessages) => ({
+      setMessages(prevMessages => ({
         ...prevMessages,
         [username]: [],
       }));
@@ -37,13 +78,13 @@ const FriendBar = () => {
   };
 
   const handleFriendClick = (friend) => {
-    if (selectedFriend !== friend) {
-      setSelectedFriend(friend); // Select the friend to open the corresponding chat
+    if (selectedFriend !== friend.name) {
+      setSelectedFriend(friend.name); // Select the friend to open the corresponding chat
     }
   };
 
   const addMessage = React.useCallback((text, sender, name, time) => {
-    setMessages((prevMessages) => ({
+    setMessages(prevMessages => ({
       ...prevMessages,
       [selectedFriend]: [...prevMessages[selectedFriend], { text, sender, name, time }],
     }));
@@ -60,11 +101,11 @@ const FriendBar = () => {
           </span>
         </div>
         <div className="friend-bar-list">
-          {friendsList.map((friend) => (
+          {friendsList.map(friend => (
             <FriendBarItem
-              key={friend} // Use a unique key for each item
+              key={friend.name} // Use a unique key for each item
               friend={friend}
-              isSelected={selectedFriend === friend}
+              isSelected={selectedFriend === friend.name}
               onClick={() => handleFriendClick(friend)}
             />
           ))}
@@ -79,6 +120,8 @@ const FriendBar = () => {
             friend={selectedFriend}
             messages={messages[selectedFriend]}
             addMessage={addMessage}
+            setMessages={setMessages}
+            isOnline={friendsList.find(friend => friend.name === selectedFriend)?.status}
           />
         ) : (
           <div>Select a friend to start chatting.</div>
