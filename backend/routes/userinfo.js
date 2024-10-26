@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
             email: user.email
         });
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error!!!' });
     }
 });
 

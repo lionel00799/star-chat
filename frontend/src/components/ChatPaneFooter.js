@@ -8,6 +8,18 @@ const ChatPaneFooter = ({ friend, addMessage, setMessages }) => {
   const userId = localStorage.getItem('userId');
   const [inputText, setInputText] = React.useState("");
 
+  const showNotification = React.useCallback((message) => {
+    if (Notification.permission === "granted") {
+      const notification = new Notification("New Message!", {
+        body: `${friend}: ${message}`,
+      });
+
+      notification.onclick = () => {
+        window.focus();
+      };
+    }
+  }, [friend]);
+
   React.useEffect(() => {
     const messageData = {
       senderId: userId,
@@ -19,6 +31,15 @@ const ChatPaneFooter = ({ friend, addMessage, setMessages }) => {
 
   React.useEffect(() => {
     socket.on("load_old_messages", (messages) => {
+
+      if ("Notification" in window) {
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            console.log("Notification permission granted!");
+          }
+        });
+      }
+
       // Format the messages
       const formattedMessages = formatMessages(messages);
       console.log("Received old messages:", formattedMessages);
@@ -36,13 +57,16 @@ const ChatPaneFooter = ({ friend, addMessage, setMessages }) => {
 
     // Listen for private messages
     socket.on('receive_private_message', (data) => {
-      addMessage(data.message, "other", data.receiver, new Date().toLocaleTimeString());
+      addMessage(data.message, "other", friend, new Date().toLocaleTimeString());
+      if (document.hidden) {
+        showNotification(data.message);
+      }
     });
 
     return () => {
     socket.off('receive_private_message');
     }
-  }, [addMessage, setMessages, friend]);
+  }, [addMessage, setMessages, friend, showNotification]);
 
   const sendMessage = (message) => {
     const messageData = {

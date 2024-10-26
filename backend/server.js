@@ -10,6 +10,8 @@ const userinfoRoutes = require("./routes/userinfo");
 const addfriendRoutes = require("./routes/addfriend");
 const statusRoutes = require("./routes/status");
 const friendStatusRoutes = require("./routes/friendStatus");
+const friendinfoRoutes = require("./routes/friendinfo");
+const nativeStatusRoutes = require("./routes/nativeStatus");
 
 const { getConversationInfo, saveMessage, getConversationMessages } = require("./utils/handleMessage");
 const User = require("./models/User");
@@ -169,6 +171,8 @@ app.use("/api/userinfo", userinfoRoutes);
 app.use("/api/addfriend", addfriendRoutes);
 app.use("/api/status", statusRoutes);
 app.use("/api/friendStatus", friendStatusRoutes);
+app.use("/api/friendinfo", friendinfoRoutes);
+app.use("/api/nativeStatus", nativeStatusRoutes);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {

@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
             success: 'Add friend successfully!'
         });
     } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(500).json({ message: 'Internal server error!' });
     }
 });
 
