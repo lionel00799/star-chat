@@ -7,7 +7,7 @@ import ChatPane from "./ChatPane"; // Import ChatPane component
 import { getFriendList, getFriendStatus} from "../services/statusService"; // Fetches friends list
 import io from "socket.io-client";
 
-const socket = io.connect('http://192.168.140.238:3003');
+const socket = io.connect('http://localhost:3003');
 
 // Initial friends list with name and status
 const FRIENDS_LIST = [];

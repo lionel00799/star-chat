@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const FETCH_API_URL = 'http://192.168.140.238:3003/api/userinfo/';
-const SEARCH_API_URL = 'http://192.168.140.238:3003/api/addfriend/';
+const FETCH_API_URL = 'http://localhost:3003/api/userinfo/';
+const SEARCH_API_URL = 'http://localhost:3003/api/addfriend/';
 
 const fetchUserData = async () => {
     try {

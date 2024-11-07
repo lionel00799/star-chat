@@ -2,7 +2,7 @@ import React from "react";
 import io from 'socket.io-client';
 import formatMessages from "../utils/handleOldMessages";
 
-const socket = io.connect('http://192.168.140.238:3003');
+const socket = io.connect('http://localhost:3003');
 
 const ChatPaneFooter = ({ friend, addMessage, setMessages }) => {
   const userId = localStorage.getItem('userId');
